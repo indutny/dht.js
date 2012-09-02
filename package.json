@@ -7,5 +7,8 @@
   },
   "scripts": {
     "test": "mocha --reporter spec --growl test/*-test.js"
+  },
+  "dependencies": {
+    "async": "~0.1.22"
   }
 }
