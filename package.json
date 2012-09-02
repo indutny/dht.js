@@ -1,0 +1,11 @@
+{
+  "name": "dht.js",
+  "version": "0.0.0",
+  "main": "lib/dht",
+  "devDependencies": {
+    "mocha": "~1.4.2"
+  },
+  "scripts": {
+    "test": "mocha --reporter spec --growl test/*-test.js"
+  }
+}
