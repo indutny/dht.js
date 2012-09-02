@@ -12,17 +12,17 @@ describe('DHT.js/Utils', function() {
   }
 
   it('should encode peer', function() {
-    var buff = utils.encodePeer({ address: '127.0.0.1', port: 0x1234 });
+    var buff = utils.encodePeers([{ address: '127.0.0.1', port: 0x1234 }]);
     eqbuffs(buff, new Buffer([127, 0, 0, 1, 0x12, 0x34]));
   });
 
   it('should encode node', function() {
     var id = new Buffer(20),
-        buff = utils.encodeNode({
+        buff = utils.encodeNodes([{
           id: id,
           address: '127.0.0.1',
           port: 0x1234
-        }),
+        }]),
         expected = new Buffer(26);
 
     id.copy(expected);
@@ -36,31 +36,19 @@ describe('DHT.js/Utils', function() {
     eqbuffs(buff, expected);
   });
 
-  it('should decode peer', function() {
-    var buff = utils.encodePeer({
-          address: '127.0.0.1',
-          port: 0x1234
-        }),
-        peers = utils.decodePeers(buff);
-
-    assert.equal(peers.length, 1);
-    assert.equal(peers[0].address, '127.0.0.1');
-    assert.equal(peers[0].port, 0x1234);
-  });
-
   it('should decode peers', function() {
-    var buff = utils.encodePeer({
-          address: '127.0.0.1',
-          port: 0x1234
-        }),
-        cnt = 20,
-        bigbuff = new Buffer(cnt * buff.length);
+    var peers = [],
+        cnt = 20;
 
     for (var i = 0; i < cnt; i++) {
-      buff.copy(bigbuff, buff.length * i);
+      peers.push({
+        address: '127.0.0.1',
+        port: 0x1234
+      });
     }
 
-    var peers = utils.decodePeers(bigbuff);
+    var buff = utils.encodePeers(peers);
+    peers = utils.decodePeers(buff);
 
     assert.equal(peers.length, cnt);
     for (var i = 0; i < cnt; i++) {
@@ -69,40 +57,24 @@ describe('DHT.js/Utils', function() {
     }
   });
 
-  it('should decode node', function() {
-    var buff = utils.encodeNode({
-          id: new Buffer(20),
-          address: '127.0.0.1',
-          port: 0x1234
-        }),
-        nodes = utils.decodeNodes(buff);
+  it('should decode nodes', function() {
+    var nodes = [],
+        cnt = 20;
 
-    assert.equal(nodes.length, 1);
+    for (var i = 0; i < cnt; i++) {
+      nodes.push({
+        id: new Buffer(20),
+        address: '127.0.0.1',
+        port: 0x1234
+      });
+    }
+
+    var buff = utils.encodeNodes(nodes);
+    nodes = utils.decodeNodes(buff);
+
+    assert.equal(nodes.length, 20);
     assert.equal(nodes[0].id.length, 20);
     assert.equal(nodes[0].address, '127.0.0.1');
     assert.equal(nodes[0].port, 0x1234);
-  });
-
-  it('should decode nodes', function() {
-    var buff = utils.encodeNode({
-          id: new Buffer(20),
-          address: '127.0.0.1',
-          port: 0x1234
-        }),
-        cnt = 20,
-        bigbuff = new Buffer(cnt * buff.length);
-
-    for (var i = 0; i < cnt; i++) {
-      buff.copy(bigbuff, buff.length * i);
-    }
-
-    var nodes = utils.decodeNodes(bigbuff);
-
-    assert.equal(nodes.length, cnt);
-    for (var i = 0; i < cnt; i++) {
-      assert.equal(nodes[i].id.length, 20);
-      assert.equal(nodes[i].address, '127.0.0.1');
-      assert.equal(nodes[i].port, 0x1234);
-    }
   });
 });
