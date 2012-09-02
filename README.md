@@ -3,8 +3,8 @@
 True, complete realization of [DHT Protocol][0] written in javascript for
 node.js runtime.
 
-** Danger! This module is in development and isn't tested enough to use it in
-production! **
+_Danger! This module is in development and isn't tested enough to use it in
+production!_
 
 ## Motivation
 
@@ -29,7 +29,7 @@ var node = dht.node.create(/* optional UDP port there */);
 
 // Connect to known node in network
 node.connect({
-  /* optional */ id: new Buffer(/* node id */),
+  id: new Buffer(/* node id */), /* <-- optional */
   address: '4.4.4.4',
   port: 13589
 });
