@@ -38,15 +38,14 @@ describe('DHT.js/Bencode', function() {
     var infohash = new Buffer([0,5,4,3,2,1,6,7,8,9,
                                0,1,3,5,8,9,6,7,8,9]);
 
-    nodes[0].addNode(nodes[1]);
-    nodes[1].addNode(nodes[2]);
-    nodes[2].addNode(nodes[3]);
+    nodes[0].connect(nodes[1]);
+    nodes[1].connect(nodes[2]);
+    nodes[2].connect({ address: nodes[3].address, port: nodes[3].port });
 
-    nodes[0].addPeer(infohash, '127.0.0.1', 13589);
+    nodes[0].advertise(infohash, 13589);
     nodes[2].on('peer:new', function(ih, peer) {
       if (infohash.toString('hex') !== ih.toString('hex')) return;
-      assert.equal(peer.address, '127.0.0.1');
-      assert.equal(peer.port, nodes[0].port);
+      assert.equal(peer.port, 13589);
       callback();
     });
 

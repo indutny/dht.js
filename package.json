@@ -1,6 +1,12 @@
 {
   "name": "dht.js",
   "version": "0.0.0",
+  "author": "Fedor Indutny <fedor@indutny.com>",
+  "homepage": "https://github.com/indutny/dht.js",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/indutny/dht.js.git"
+  },
   "main": "lib/dht",
   "devDependencies": {
     "mocha": "~1.4.2"
