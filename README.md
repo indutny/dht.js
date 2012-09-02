@@ -3,12 +3,21 @@
 True, complete realization of [DHT Protocol][0] written in javascript for
 node.js runtime.
 
+** Danger! This module is in development and isn't tested enough to use it in
+production! **
+
 ## Motivation
 
 DHT is a great tool for storing and searching data, and is widely adopted and
 used in almost every existing torrent client. Since torrents are quite popular
 nowadays, being able to connect to that network, storing or finding data inside
 it can be really useful for building interesting distributed applications.
+
+## Installation
+
+```bash
+npm install dht.js
+```
 
 ## Usage
 
