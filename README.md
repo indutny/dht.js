@@ -47,6 +47,15 @@ node.on('peer:new', function (infohash, peer) {
 
   // Stop listening
   node.close();
+
+  // Returns node's state as a javascript object
+  var state = node.save();
+
+  // Create node from existing state
+  var old = dht.node.create(state);
+
+  // Just cleaning up
+  old.close();
 });
 ```
 

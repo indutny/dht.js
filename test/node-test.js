@@ -39,16 +39,39 @@ describe('DHT.js/Bencode', function() {
                                0,1,3,5,8,9,6,7,8,9]);
 
     nodes[0].connect(nodes[1]);
-    nodes[1].connect(nodes[2]);
-    nodes[2].connect({ address: nodes[3].address, port: nodes[3].port });
+    nodes[1].connect({ address: nodes[2].address, port: nodes[2].port });
 
     nodes[0].advertise(infohash, 13589);
-    nodes[3].on('peer:new', function(ih, peer) {
+    nodes[2].on('peer:new', function(ih, peer) {
       if (infohash.toString('hex') !== ih.toString('hex')) return;
       assert.equal(peer.port, 13589);
       callback();
     });
 
     nodes[0].announce();
+  });
+
+  it('should save/load configuration', function() {
+    var infohash = new Buffer([0,5,4,3,2,1,6,7,8,9,
+                               0,1,3,5,8,9,6,7,8,9]);
+
+    // Create star-like network
+    for (var i = 1; i < nodes.length; i++) {
+      nodes[0].connect(nodes[i]);
+    }
+
+    nodes[0].advertise(infohash, 13589);
+    nodes[0].announce();
+
+    var config = nodes[0].save();
+
+    nodes[0].close();
+    var test = dht.node.create(config);
+
+    test.once('listening', function() {
+      assert.equal(nodes[0].port, test.port);
+      assert.deepEqual(nodes[0].advertisements, test.advertisements);
+      test.close();
+    });
   });
 });
