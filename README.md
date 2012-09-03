@@ -39,9 +39,9 @@ var hash = new Buffer(/* 160 bit infohash */);
 node.advertise(hash, 13589 /* port */);
 
 // Wait for someone to appear
-node.on('peer:new', function (infohash, peer) {
+node.on('peer:new', function (infohash, peer, isAdvertised) {
   // Ignore other services
-  if (infohash.toString() !== hash.toString()) return;
+  if (!isAdvertised) return;
 
   console.log(peer.address, peer.port);
 

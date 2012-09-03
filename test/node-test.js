@@ -70,7 +70,6 @@ describe('DHT.js/Bencode', function() {
 
     test.once('listening', function() {
       assert.equal(nodes[0].port, test.port);
-      assert.deepEqual(nodes[0].advertisements, test.advertisements);
       test.close();
     });
   });
