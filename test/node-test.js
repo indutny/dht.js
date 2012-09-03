@@ -43,7 +43,7 @@ describe('DHT.js/Bencode', function() {
     nodes[2].connect({ address: nodes[3].address, port: nodes[3].port });
 
     nodes[0].advertise(infohash, 13589);
-    nodes[2].on('peer:new', function(ih, peer) {
+    nodes[3].on('peer:new', function(ih, peer) {
       if (infohash.toString('hex') !== ih.toString('hex')) return;
       assert.equal(peer.port, 13589);
       callback();
