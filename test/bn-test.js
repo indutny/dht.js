@@ -65,6 +65,15 @@ describe('DHT.js/BigNumbers', function() {
     assert.equal(bn.compare(a, b), 1);
   });
 
+  it('should compare #4', function() {
+    var a = new Buffer('00000000000000000000000000000000000000000000', 'hex'),
+        b = new Buffer('3444b337cc50b002736f0ba1e1af1c0e430474e2', 'hex'),
+        c = new Buffer('00000000000000000000000000000000800000000000', 'hex');
+
+    assert.equal(bn.compare(a, b), -1);
+    assert.equal(bn.compare(b, c), 1);
+  });
+
   it('should random', function() {
     var a = new Buffer('13345678', 'hex'),
         b = new Buffer('15359999', 'hex'),
