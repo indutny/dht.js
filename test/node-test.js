@@ -2,7 +2,7 @@ var assert = require('assert'),
     dht = require('..'),
     Buffer = require('buffer').Buffer;
 
-describe('DHT.js/Bencode', function() {
+describe('DHT.js/Networking', function() {
   var nodes;
 
   beforeEach(function(callback) {
