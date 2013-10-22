@@ -29,7 +29,7 @@ var node = dht.node.create(/* optional UDP port there */);
 
 // Connect to known node in network
 node.connect({
-  id: new Buffer(/* node id */), /* <-- optional */
+  id: new Buffer(/* 160bit node id */), /* <-- optional */
   address: '4.4.4.4',
   port: 13589
 });
